@@ -38,6 +38,49 @@
             color: white;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        /* GitHub猫图标样式 */
+        .github-corner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 10;
+        }
+        
+        .github-corner svg {
+            width: 60px;
+            height: 60px;
+            border-radius: 0 12px 0 0;
+        }
+        
+        /* GitHub Corner Specific Styles */
+        #github-triangle {
+            fill: #2b44c5 !important;
+        }
+        
+        #github-cat {
+            fill: #000000 !important;
+            transition: transform 0.3s ease;
+            transform-origin: center center;
+        }
+        
+        /* GitHub猫悬停动画 */
+        @keyframes githubCatWave {
+            0%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+            25% {
+                transform: rotate(8deg) scale(1.05);
+            }
+            75% {
+                transform: rotate(-8deg) scale(1.05);
+            }
+        }
+        
+        .github-corner:hover #github-cat {
+            animation: githubCatWave 0.6s ease-in-out;
         }
         
         /* 功能卡片样式 */
@@ -200,6 +243,13 @@
     <div class="container mt-4">
         <!-- Hero Section -->
         <div class="hero-section p-3 mb-3">
+            <!-- GitHub Corner -->
+            <a href="https://github.com/su9erher0es/fphbdy" class="github-corner" aria-label="View source on GitHub" target="_blank" rel="noopener noreferrer">
+                <svg width="60" height="60" viewBox="0 0 250 250" style="position: absolute; top: 0; right: 0; border: 0;" aria-hidden="true">
+                    <path id="github-triangle" d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z" style="fill: #2b44c5; fill-rule: evenodd;"></path>
+                    <path id="github-cat" d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2 M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" style="fill: #000000; fill-rule: evenodd;"></path>
+                </svg>
+            </a>
             <div class="text-center py-2">
                 <h1 class="display-6 font-bold mb-1">PDF电子发票批量合并打印</h1>
                 <div class="alert alert-light bg-white/90 text-primary mt-1 mb-2 px-4 py-2 inline-block rounded-lg">
@@ -242,13 +292,13 @@
                 <span class="ms-3">多造氧气: <span id="oxygenProduction">0公升</span></span>
             </div>
             <div class="d-flex gap-2">
-                <button type="button" id="selectButton" class="btn btn-light text-primary btn-sm">选择发票</button>
-                <button type="button" id="clearButton" class="btn btn-light text-danger btn-sm" style="display: none;">清空列表</button>
+                <button type="button" id="selectButton" class="btn btn-light text-primary btn-sm" aria-label="选择PDF发票文件" role="button">选择发票</button>
+                <button type="button" id="clearButton" class="btn btn-light text-danger btn-sm" style="display: none;" aria-label="清空所有已上传的发票文件" role="button">清空列表</button>
             </div>
         </div>
 
         <!-- File List (Hidden by default, shown only when files are uploaded) -->
-        <div id="fileList" class="file-list p-3 mb-3" style="display: none;">
+        <div id="fileList" class="file-list p-3 mb-3" style="display: none;" role="list" aria-label="已上传的PDF发票文件列表">
             <!-- File items will be added here -->
         </div>
 
@@ -259,7 +309,7 @@
             <div class="row g-2">
                 <div class="col-md-6">
                     <label for="invoicesPerPage" class="form-label text-sm">每页发票数量</label>
-                    <select class="form-select form-select-sm" id="invoicesPerPage">
+                    <select class="form-select form-select-sm" id="invoicesPerPage" aria-label="每页A4纸上打印的发票数量" role="combobox">
                         <option value="1">1张/页</option>
                         <option value="2" selected>2张/页</option>
                         <option value="4">4张/页</option>
@@ -267,7 +317,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="pageOrientation" class="form-label text-sm">页面方向</label>
-                    <select class="form-select form-select-sm" id="pageOrientation">
+                    <select class="form-select form-select-sm" id="pageOrientation" aria-label="PDF页面方向设置" role="combobox">
                         <option value="portrait" selected>纵向</option>
                         <option value="landscape">横向</option>
                     </select>
@@ -277,7 +327,7 @@
 
         <!-- 操作按钮 -->
         <div class="text-center mb-4">
-            <button type="button" id="mergeButton" class="btn btn-primary btn-sm me-2">合并预览</button>
+            <button type="button" id="mergeButton" class="btn btn-primary btn-sm me-2" aria-label="合并所有已上传的PDF发票并生成预览" role="button">合并预览</button>
         </div>
     </div>
 
@@ -295,8 +345,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline" data-bs-dismiss="modal">关闭</button>
-                    <button type="button" id="downloadButton" class="btn btn-outline">下载PDF</button>
+                    <button type="button" class="btn btn-outline" data-bs-dismiss="modal" aria-label="关闭PDF预览模态框" role="button">关闭</button>
+                    <button type="button" id="downloadButton" class="btn btn-outline" aria-label="下载合并后的PDF文件" role="button">下载PDF</button>
                 </div>
             </div>
         </div>
@@ -310,16 +360,37 @@
     <script src="libs/FileSaver.min.js"></script>
 
     <script>
+        // 全局常量
+        const CONSTANTS = {
+            // PDF页面尺寸（点）
+            A4_WIDTH: 595.28,
+            A4_HEIGHT: 841.89,
+            
+            // 文件限制
+            MAX_FILES: 100, // 最多文件数
+            MAX_SINGLE_FILE_SIZE: 10 * 1024 * 1024, // 单个文件最大10MB
+            MAX_TOTAL_FILE_SIZE: 50 * 1024 * 1024, // 总文件最大50MB
+            
+            // 页面布局
+            MARGIN: 10, // 边距（点）
+            SPACING: 10, // 间距（点）
+            
+            // 其他限制
+            MAX_PAGES: 1000, // 最多处理页数
+            
+            // 页面方向
+            ORIENTATION: {
+                PORTRAIT: 'portrait',
+                LANDSCAPE: 'landscape'
+            }
+        };
+        
         // 全局变量
         let uploadedFiles = [];
         let mergedPdfBytes = null;
     
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
-            const dropArea = document.createElement('div');
-            dropArea.id = 'dropArea';
-            dropArea.style.display = 'none';
-            
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
             fileInput.id = 'fileInput';
@@ -350,11 +421,9 @@
                     if (selectedValue === '4') {
                         // 当选择4张/页时，自动设置为横向
                         pageOrientationSelect.value = 'landscape';
-                        console.log('选择了4张/页，自动切换为横向页面');
                     } else if (selectedValue === '1' || selectedValue === '2') {
                         // 当选择1张/页或2张/页时，自动设置为纵向
                         pageOrientationSelect.value = 'portrait';
-                        console.log(`选择了${selectedValue}张/页，自动切换为纵向页面`);
                     }
                 });
             }
@@ -431,7 +500,6 @@
             const modalElement = document.getElementById('printPreviewModal');
             modalElement.addEventListener('hidden.bs.modal', function() {
                 URL.revokeObjectURL(pdfUrl);
-                console.log('PDF预览URL已释放');
             });
         }
     
@@ -455,8 +523,7 @@
                 const files = Array.from(e.dataTransfer.files);
                 processFiles(files);
             } catch (error) {
-                console.error('处理拖拽文件失败:', error);
-                alert('处理文件失败，请重试');
+                alert('拖拽文件处理失败，请重试\n\n可能的原因：\n1. 文件格式不正确\n2. 文件过大\n3. 浏览器不支持拖拽操作\n\n解决建议：\n1. 确保所有文件都是PDF格式\n2. 单个文件不超过10MB\n3. 尝试使用"选择发票"按钮上传文件');
             }
         }
     
@@ -470,17 +537,17 @@
             const pdfFiles = files.filter(file => {
                 // 检查文件类型和扩展名
                 return (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) && 
-                       file.size > 0 && file.size < 10 * 1024 * 1024; // 限制单个文件大小为10MB
+                       file.size > 0 && file.size < CONSTANTS.MAX_SINGLE_FILE_SIZE; // 限制单个文件大小
             });
             
             if (pdfFiles.length === 0) {
-                alert('请选择有效的PDF文件（单个文件大小不超过10MB）');
+                alert(`请选择有效的PDF文件（单个文件大小不超过${formatFileSize(CONSTANTS.MAX_SINGLE_FILE_SIZE)}）`);
                 return;
             }
             
             // 检查总文件数
-            if (uploadedFiles.length + pdfFiles.length > 100) {
-                alert('上传文件数量超过限制（最多100个文件）');
+            if (uploadedFiles.length + pdfFiles.length > CONSTANTS.MAX_FILES) {
+                alert(`上传文件数量超过限制（最多${CONSTANTS.MAX_FILES}个文件）`);
                 return;
             }
             
@@ -488,8 +555,8 @@
             const totalSize = uploadedFiles.reduce((sum, file) => sum + file.size, 0) + 
                              pdfFiles.reduce((sum, file) => sum + file.size, 0);
             
-            if (totalSize > 50 * 1024 * 1024) { // 限制总文件大小为50MB
-                alert('总文件大小超过限制（最多50MB）');
+            if (totalSize > CONSTANTS.MAX_TOTAL_FILE_SIZE) { // 限制总文件大小
+                alert(`总文件大小超过限制（最多${formatFileSize(CONSTANTS.MAX_TOTAL_FILE_SIZE)}）`);
                 return;
             }
             
@@ -502,8 +569,6 @@
             updateFileList();
             updateButtonStates();
             updateUploadStats();
-            
-            console.log(`成功添加 ${pdfFiles.length} 个PDF文件，当前总数: ${uploadedFiles.length}`);
         }
     
         // 更新文件列表
@@ -513,22 +578,56 @@
             
             if (uploadedFiles.length === 0) {
                 fileList.style.display = 'none';
+                fileList.innerHTML = ''; // 清空内容
                 return;
             }
             
             fileList.style.display = 'block';
+            
+            // 获取当前已存在的文件项
+            const existingItems = Array.from(fileList.querySelectorAll('.file-item'));
+            
+            // 对于少量文件（如<100个），直接重新渲染可能更高效
+            // 因为DOM操作的开销可能比复杂的比较算法更大
             fileList.innerHTML = '';
             
             uploadedFiles.forEach((file, index) => {
+                // 创建文件项
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <div>
-                        <span class="file-name">${file.name}</span>
-                        <span class="file-size">(${formatFileSize(file.size)})</span>
-                    </div>
-                    <button class="btn btn-sm btn-outline-danger" onclick="removeFile(${index})">删除</button>
-                `;
+                fileItem.role = 'listitem';
+                fileItem.ariaLabel = `文件: ${file.name} (${formatFileSize(file.size)})`;
+                
+                // 使用文档片段创建内部元素，减少DOM操作次数
+                const fragment = document.createDocumentFragment();
+                
+                const fileInfoDiv = document.createElement('div');
+                
+                const fileNameSpan = document.createElement('span');
+                fileNameSpan.className = 'file-name';
+                fileNameSpan.textContent = file.name;
+                fileNameSpan.ariaHidden = 'true';
+                
+                const fileSizeSpan = document.createElement('span');
+                fileSizeSpan.className = 'file-size';
+                fileSizeSpan.textContent = `(${formatFileSize(file.size)})`;
+                fileSizeSpan.ariaHidden = 'true';
+                
+                fileInfoDiv.appendChild(fileNameSpan);
+                fileInfoDiv.appendChild(fileSizeSpan);
+                
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'btn btn-sm btn-outline-danger';
+                deleteButton.textContent = '删除';
+                deleteButton.onclick = () => removeFile(index); // 使用函数引用代替onclick属性
+                deleteButton.ariaLabel = `删除文件: ${file.name}`;
+                deleteButton.role = 'button';
+                deleteButton.ariaControls = 'fileList';
+                
+                fragment.appendChild(fileInfoDiv);
+                fragment.appendChild(deleteButton);
+                
+                fileItem.appendChild(fragment);
                 fileList.appendChild(fileItem);
             });
         }
@@ -624,14 +723,9 @@
             }
         
             try {
-                console.log('开始合并PDF文件');
-                console.log('上传的文件数量:', uploadedFiles.length);
-                
                 // 获取用户选择的每页发票数量和页面方向
                 const invoicesPerPage = parseInt(document.getElementById('invoicesPerPage').value) || 1;
                 let pageOrientation = document.getElementById('pageOrientation').value || 'portrait';
-                console.log('每页发票数量:', invoicesPerPage);
-                console.log('页面方向:', pageOrientation);
                 
                 // 根据每页发票数量计算行列数
                 let rows, columns;
@@ -653,44 +747,48 @@
                         rows = 1;
                         columns = 1;
                 }
-                console.log('行列数:', rows, 'x', columns);
-                console.log('最终页面方向:', pageOrientation);
                 
                 // 检查PDFLib是否正确加载
                 if (!PDFLib || !PDFLib.PDFDocument) {
                     throw new Error('PDFLib库加载失败，请刷新页面重试');
                 }
                 
-                console.log('PDFLib对象:', PDFLib);
-                console.log('PDFDocument是否存在:', PDFLib.PDFDocument);
-                
                 // 使用本地加载的pdf-lib库
                 const PDFDocument = PDFLib.PDFDocument;
                 
                 // 创建新的PDF文档
-                console.log('创建新的PDF文档');
                 const mergedPdf = await PDFDocument.create();
                 
                 // 收集所有发票页面
                 const allInvoicePages = [];
-                const MAX_PAGES = 1000; // 限制总页数，防止内存溢出
+                const MAX_PAGES = CONSTANTS.MAX_PAGES; // 限制总页数，防止内存溢出
                 
                 for (let i = 0; i < uploadedFiles.length; i++) {
                     const file = uploadedFiles[i];
-                    console.log(`处理文件 ${i + 1}/${uploadedFiles.length}:`, file.name);
                     
                     try {
                         // 显示处理进度
                         const printPreviewContent = document.getElementById('printPreviewContent');
                         if (printPreviewContent) {
-                            printPreviewContent.innerHTML = `<div class="text-center py-5"><div class="spinner-border" role="status"><span class="visually-hidden">加载中...</span></div><p class="mt-2">正在处理文件 ${i + 1}/${uploadedFiles.length}: ${file.name}</p></div>`;
+                            const progress = ((i / uploadedFiles.length) * 100).toFixed(1);
+                            printPreviewContent.innerHTML = `
+                                <div class="text-center py-5">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">加载中...</span>
+                                    </div>
+                                    <h5 class="mt-2 mb-1">合并PDF文件</h5>
+                                    <p class="text-muted mb-3">正在处理文件 ${i + 1}/${uploadedFiles.length}: ${file.name}</p>
+                                    <div class="progress mx-auto w-75" style="height: 10px;">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: ${progress}%;" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <p class="text-sm mt-2 text-muted">进度: ${progress}%</p>
+                                </div>
+                            `;
                         }
                         
                         const arrayBuffer = await file.arrayBuffer();
-                        console.log(`文件 ${file.name} 读取成功，大小: ${arrayBuffer.byteLength} 字节`);
                         
                         const pdfDoc = await PDFDocument.load(arrayBuffer);
-                        console.log(`文件 ${file.name} 加载成功，页数: ${pdfDoc.getPageCount()}`);
                         
                         // 检查页数限制
                         const pageCount = pdfDoc.getPageCount();
@@ -700,57 +798,47 @@
                         
                         // 复制页面到mergedPdf
                         const pageIndices = pdfDoc.getPageIndices();
-                        console.log(`文件 ${file.name} 的页面索引:`, pageIndices);
                         
                         // 对于每个页面，先嵌入再添加
                         for (const pageIndex of pageIndices) {
                             try {
                                 // 先获取PDFPage对象
                                 const pdfPage = pdfDoc.getPage(pageIndex);
-                                console.log(`文件 ${file.name} 页面 ${pageIndex + 1} 获取成功`);
                                 
                                 // 嵌入页面到mergedPdf
                                 const embeddedPage = await mergedPdf.embedPage(pdfPage);
-                                console.log(`文件 ${file.name} 页面 ${pageIndex + 1} 嵌入成功`);
                                 
                                 // 添加到发票页面列表
                                 allInvoicePages.push(embeddedPage);
                             } catch (embedError) {
-                                console.error(`文件 ${file.name} 页面 ${pageIndex + 1} 处理失败:`, embedError);
                                 throw new Error(`文件 ${file.name} 页面 ${pageIndex + 1} 处理失败: ${embedError.message}`);
                             }
                         }
-                        console.log(`文件 ${file.name} 处理完成，嵌入页数: ${pageIndices.length}`);
                     } catch (fileError) {
-                        console.error(`处理文件 ${file.name} 失败:`, fileError);
                         throw new Error(`处理文件 ${file.name} 失败: ${fileError.message}`);
                     }
                 }
-                console.log('所有发票页面收集完成，总页数:', allInvoicePages.length);
+
                 
                 // 设置A4页面尺寸
-                const A4_WIDTH = 595.28; // 点
-                const A4_HEIGHT = 841.89; // 点
                 let pageWidth, pageHeight;
                 
-                if (pageOrientation === 'portrait') {
-                    pageWidth = A4_WIDTH;
-                    pageHeight = A4_HEIGHT;
+                if (pageOrientation === CONSTANTS.ORIENTATION.PORTRAIT) {
+                    pageWidth = CONSTANTS.A4_WIDTH;
+                    pageHeight = CONSTANTS.A4_HEIGHT;
                 } else {
-                    pageWidth = A4_HEIGHT;
-                    pageHeight = A4_WIDTH;
+                    pageWidth = CONSTANTS.A4_HEIGHT;
+                    pageHeight = CONSTANTS.A4_WIDTH;
                 }
-                console.log('A4页面尺寸:', pageWidth, 'x', pageHeight);
                 
                 // 计算每个发票页面的大小和位置
-                const MARGIN = 10; // 边距（点）
-                const SPACING = 10; // 间距（点）
+                const MARGIN = CONSTANTS.MARGIN; // 边距（点）
+                const SPACING = CONSTANTS.SPACING; // 间距（点）
                 
                 // 对于1张每页且纵向模式，使用2张每页的布局计算发票尺寸
                 let calcRows = rows;
-                if (rows === 1 && columns === 1 && pageOrientation === 'portrait') {
+                if (rows === 1 && columns === 1 && pageOrientation === CONSTANTS.ORIENTATION.PORTRAIT) {
                     calcRows = 2; // 使用2行布局来计算发票高度
-                    console.log('1张每页纵向模式，使用2张每页的布局计算发票尺寸');
                 }
                 
                 const availableWidth = pageWidth - (MARGIN * 2) - ((columns - 1) * SPACING);
@@ -758,68 +846,52 @@
                 const invoiceWidth = availableWidth / columns;
                 const invoiceHeight = availableHeight / calcRows;
                 
-                console.log('可用宽度:', availableWidth, '可用高度:', availableHeight);
-                console.log('发票尺寸:', invoiceWidth, 'x', invoiceHeight);
-                
                 // 创建合并页面
                 let currentPageIndex = 0;
                 while (currentPageIndex < allInvoicePages.length) {
                     // 创建新的A4页面
                     const newPage = mergedPdf.addPage([pageWidth, pageHeight]);
-                    console.log(`创建新的A4页面，当前处理发票索引:`, currentPageIndex);
                     
                     // 在当前A4页面上排列发票
                     for (let row = 0; row < rows && currentPageIndex < allInvoicePages.length; row++) {
                         for (let col = 0; col < columns && currentPageIndex < allInvoicePages.length; col++) {
                             const invoicePage = allInvoicePages[currentPageIndex];
-                            console.log(`添加发票页面 ${currentPageIndex + 1}/${allInvoicePages.length} 到位置 (${row}, ${col})`);
                             
                             // 计算发票页面的位置
                             let x, y;
-                            if (rows === 1 && columns === 1 && pageOrientation === 'portrait') {
+                            if (rows === 1 && columns === 1 && pageOrientation === CONSTANTS.ORIENTATION.PORTRAIT) {
                                 // 对于1张每页且纵向模式，使用2张每页的布局位置
                                 x = MARGIN;
                                 y = pageHeight - MARGIN - invoiceHeight; // 显示在页面上半部分
-                                console.log(`1张每页纵向模式，发票页面位置(上半部分): (${x}, ${y})`);
                             } else {
                                 // 正常情况的位置计算
                                 x = MARGIN + (col * (invoiceWidth + SPACING));
                                 y = pageHeight - MARGIN - ((row + 1) * invoiceHeight) - (row * SPACING);
-                                console.log(`发票页面位置: (${x}, ${y})`);
                             }
                             
                             // 绘制发票页面到A4页面上
                             try {
                                 // 检查invoicePage是否有效
                                 if (!invoicePage) {
-                                    console.error(`发票页面 ${currentPageIndex + 1} 无效`);
                                     throw new Error(`发票页面 ${currentPageIndex + 1} 无效`);
                                 }
-                                
-                                // 检查invoicePage的类型
-                                console.log(`发票页面 ${currentPageIndex + 1} 类型:`, typeof invoicePage);
-                                console.log(`发票页面 ${currentPageIndex + 1} 属性:`, Object.keys(invoicePage));
                                 
                                 // 获取发票页面的原始大小（对于PDFEmbeddedPage，直接使用width和height属性）
                                 const originalWidth = invoicePage.width || 0;
                                 const originalHeight = invoicePage.height || 0;
-                                console.log(`发票页面 ${currentPageIndex + 1} 原始大小: ${originalWidth} x ${originalHeight}`);
                                 
                                 // 计算缩放比例，保持宽高比
                                 const scaleX = invoiceWidth / originalWidth;
                                 const scaleY = invoiceHeight / originalHeight;
                                 const scale = Math.min(scaleX, scaleY);
-                                console.log(`发票页面 ${currentPageIndex + 1} 缩放比例:`, scale);
                                 
                                 // 计算缩放后的大小
                                 const scaledWidth = originalWidth * scale;
                                 const scaledHeight = originalHeight * scale;
-                                console.log(`发票页面 ${currentPageIndex + 1} 缩放后大小: ${scaledWidth} x ${scaledHeight}`);
                                 
                                 // 计算居中位置
                                 const centeredX = x + (invoiceWidth - scaledWidth) / 2;
                                 const centeredY = y + (invoiceHeight - scaledHeight) / 2;
-                                console.log(`发票页面 ${currentPageIndex + 1} 居中位置: (${centeredX}, ${centeredY})`);
                                 
                                 // 绘制发票页面
                                 newPage.drawPage(invoicePage, {
@@ -828,7 +900,6 @@
                                     width: scaledWidth,
                                     height: scaledHeight,
                                 });
-                                console.log(`发票页面 ${currentPageIndex + 1} 绘制成功`);
                                 
                                 // 绘制裁剪线
                                 try {
@@ -848,7 +919,6 @@
                                             color: lineColor,
                                             dashArray: [5, 3], // 虚线样式：5点实线，3点空白
                                         });
-                                        console.log(`绘制垂直裁剪线在 x=${lineX}, 从 y=${lineStartY} 到 y=${lineEndY}`);
                                     }
                                     
                                     // 绘制水平裁剪线（如果不是最后一行）
@@ -865,8 +935,7 @@
                                             color: lineColor,
                                             dashArray: [5, 3], // 虚线样式：5点实线，3点空白
                                         });
-                                        console.log(`绘制水平裁剪线在 y=${lineY}, 从 x=${lineStartX} 到 x=${lineEndX}`);
-                                    } else if (rows === 1 && columns === 1 && pageOrientation === 'portrait') {
+                                    } else if (rows === 1 && columns === 1 && pageOrientation === CONSTANTS.ORIENTATION.PORTRAIT) {
                                         // 对于1张每页且纵向模式，在页面中间绘制水平裁剪线
                                         // 就像2张每页纵向模式一样
                                         const lineY = (pageHeight - SPACING) / 2; // 页面中间位置
@@ -879,14 +948,11 @@
                                             color: lineColor,
                                             dashArray: [5, 3], // 虚线样式：5点实线，3点空白
                                         });
-                                        console.log(`1张每页纵向模式，在 y=${lineY} 绘制中间水平裁剪线`);
                                     }
                                 } catch (lineError) {
-                                    console.error(`绘制裁剪线失败:`, lineError);
                                     // 裁剪线绘制失败不影响整体合并
                                 }
                             } catch (drawError) {
-                                console.error(`绘制发票页面 ${currentPageIndex + 1} 失败:`, drawError);
                                 throw new Error(`绘制发票页面失败: ${drawError.message}`);
                             }
                             
@@ -895,18 +961,42 @@
                     }
                 }
                 
+                // 显示最终进度
+                const printPreviewContent = document.getElementById('printPreviewContent');
+                if (printPreviewContent) {
+                    printPreviewContent.innerHTML = `
+                        <div class="text-center py-5">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">加载中...</span>
+                            </div>
+                            <h5 class="mt-2 mb-1">正在创建合并后的PDF...</h5>
+                            <div class="progress mx-auto w-75" style="height: 10px;">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p class="text-sm mt-2 text-muted">进度: 100%</p>
+                        </div>
+                    `;
+                }
+                
                 // 序列化PDF
-                console.log('序列化PDF文档');
                 const pdfBytes = await mergedPdf.save();
-                console.log('PDF序列化成功，大小:', pdfBytes.byteLength, '字节');
                 
                 mergedPdfBytes = pdfBytes;
-                console.log('合并完成，返回PDF字节数据');
                 return pdfBytes;
             } catch (error) {
-                console.error('合并PDF失败:', error);
-                console.error('错误堆栈:', error.stack);
-                alert(`合并PDF失败: ${error.message}`);
+                let errorMessage = '合并PDF失败，请检查以下问题：\n\n';
+                
+                if (error.message.includes('PDFLib')) {
+                    errorMessage += `PDF处理库错误：${error.message}\n\n解决建议：\n1. 刷新页面重试\n2. 检查PDF文件是否损坏\n3. 确保使用现代浏览器（Chrome、Firefox、Edge）`;
+                } else if (error.message.includes('超出页数限制')) {
+                    errorMessage += `${error.message}\n\n解决建议：\n1. 减少上传的PDF文件数量\n2. 拆分文件分批处理`;
+                } else if (error.message.includes('处理文件失败')) {
+                    errorMessage += `${error.message}\n\n解决建议：\n1. 检查该文件是否为有效的PDF格式\n2. 确认文件没有被加密或损坏\n3. 尝试单独上传该文件测试`;
+                } else {
+                    errorMessage += `${error.message}\n\n解决建议：\n1. 检查所有上传的PDF文件格式是否正确\n2. 确保文件大小不超过限制\n3. 刷新页面后重试操作`;
+                }
+                
+                alert(errorMessage);
                 return null;
             }
         }
@@ -942,12 +1032,17 @@
                         document.body.removeChild(a);
                         URL.revokeObjectURL(url);
                     }
-                    
-                    console.log('PDF下载成功');
                 }
             } catch (error) {
-                console.error('下载PDF失败:', error);
-                alert(`下载PDF失败: ${error.message}`);
+                let errorMessage = '下载PDF失败，请检查以下问题：\n\n';
+                
+                if (error.message.includes('合并')) {
+                    errorMessage += `${error.message}\n\n解决建议：\n1. 确保已成功合并PDF文件\n2. 检查网络连接是否正常\n3. 刷新页面后重试`;
+                } else {
+                    errorMessage += `${error.message}\n\n解决建议：\n1. 检查网络连接是否正常\n2. 确保浏览器允许弹出下载窗口\n3. 尝试使用其他浏览器下载`;
+                }
+                
+                alert(errorMessage);
             } finally {
                 // 恢复按钮状态
                 const downloadButton = document.getElementById('downloadButton');
