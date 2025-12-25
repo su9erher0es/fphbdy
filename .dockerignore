@@ -1,0 +1,29 @@
+# 忽略Git相关文件
+.git/
+.gitignore
+
+# 忽略Docker相关文件
+Dockerfile
+.dockerignore
+
+# 忽略日志文件
+logs/
+*.log
+
+# 忽略临时文件
+tmp/
+temp/
+
+# 忽略node_modules（如果有的话）
+node_modules/
+
+# 忽略编辑器配置文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 忽略操作系统文件
+Thumbs.db
+.DS_Store

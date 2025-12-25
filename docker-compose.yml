@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  pdf-invoice-merger:
+    image: su9erher0es/pdf-invoice-merger:latest
+    container_name: pdf-invoice-merger-app
+    ports:
+      - "55561:80"
+    volumes:
+      - /opt/pdf-invoice-merger:/usr/share/nginx/html
+    restart: unless-stopped
+    networks:
+      - invoice-network
+
+networks:
+  invoice-network:
+    driver: bridge
