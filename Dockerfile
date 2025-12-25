@@ -2,7 +2,7 @@
 FROM nginx:alpine
 
 # 设置维护者信息
-LABEL maintainer="Your Name <your.email@example.com>"
+LABEL maintainer="su9erher0es@gmail.com"
 
 # 复制项目文件到Nginx的默认站点目录
 COPY . /usr/share/nginx/html

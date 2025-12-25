@@ -52,13 +52,23 @@
 
 ### 方法三：使用Docker容器（推荐）
 1. 确保已安装Docker和Docker Compose
-2. 下载项目文件到本地
-3. 打开命令行工具，进入项目目录
-4. 运行以下命令启动Docker容器：
+2. 创建一个 `docker-compose.yml` 文件，内容如下：
+   ```yaml
+   version: '3.8'
+   
+   services:
+     pdf-invoice-merger:
+       image: su9erher0es/pdf-invoice-merger:latest
+       container_name: pdf-invoice-merger-app
+       ports:
+         - "55561:80"
+       restart: unless-stopped
+   ```
+3. 运行以下命令启动Docker容器：
    ```bash
    docker-compose up -d
    ```
-5. 在浏览器中访问 `http://localhost:55561`
+4. 在浏览器中访问 `http://localhost:55561`
 
 ### 使用步骤
 1. **上传发票**：点击"选择发票"按钮或直接拖拽PDF文件到浏览器窗口
@@ -121,93 +131,62 @@ fphbdy/
 
 ## Docker部署
 
-### Docker Compose配置
-项目提供了完整的Docker Compose配置，可以快速启动容器：
+### 从Docker Hub拉取镜像（推荐）
+镜像已经成功发布到Docker Hub，可以直接拉取使用：
 
-```yaml
-version: '3.8'
+1. 确保已安装Docker和Docker Compose
+2. 创建 `docker-compose.yml` 文件（内容如上）
+3. 运行以下命令启动Docker容器：
+   ```bash
+   # 启动容器
+   docker-compose up -d
+   
+   # 停止容器
+   docker-compose down
+   
+   # 查看容器日志
+   docker-compose logs
+   ```
+4. 在浏览器中访问 `http://localhost:55561`
 
-services:
-  pdf-invoice-merger:
-    image: su9erher0es/pdf-invoice-merger:latest
-    container_name: pdf-invoice-merger-app
-    ports:
-      - "55561:80"
-    volumes:
-      - /opt/pdf-invoice-merger:/usr/share/nginx/html
-    restart: unless-stopped
-    networks:
-      - invoice-network
+### 本地构建镜像（可选）
+如果需要修改代码并重新构建镜像：
 
-networks:
-  invoice-network:
-    driver: bridge
-```
-
-### 部署命令
-- **启动容器**：`docker-compose up -d`
-- **停止容器**：`docker-compose down`
-- **查看日志**：`docker-compose logs`
-
-### 自定义配置
-如果需要修改配置，可以编辑 `docker-compose.yml` 文件：
-- **端口映射**：修改 `ports` 字段中的外部端口
-- **数据卷**：修改 `volumes` 字段中的主机目录
-- **重启策略**：修改 `restart` 字段的值
-
-## 注意事项
-
-### 系统要求
-- **直接打开**：现代浏览器（Chrome 60+、Firefox 55+、Safari 12+、Edge 79+）
-- **本地服务器**：Python 3.x 或其他Web服务器
-- **Docker部署**：Docker 19.03+ 和 Docker Compose 1.25+
-
-### 支持的文件格式
-- 仅支持PDF格式的文件
-- 支持标准的PDF文件，包括电子发票、普通PDF文档等
-
-### 性能提示
-- 对于大量文件或大文件的处理，可能需要较长时间
-- 处理过程中请保持浏览器窗口打开，不要刷新页面
-- 如果遇到内存不足的提示，请减少上传的文件数量或大小
-
-### 打印建议
-- 使用高质量的打印设置以获得最佳效果
-- 打印后可以使用虚线作为参考进行裁剪
-- 建议使用双面打印进一步节省纸张
+1. 下载项目文件到本地
+2. 打开命令行工具，进入项目目录
+3. 运行以下命令构建并启动Docker容器：
+   ```bash
+   # 构建并启动容器
+   docker-compose up -d --build
+   ```
+4. 在浏览器中访问 `http://localhost:55561`
 
 ## 常见问题
 
-### Q: 上传文件时显示"文件大小超过限制"怎么办？
-A: 单个PDF文件大小不能超过10MB，总文件大小不能超过50MB。请尝试分批处理文件。
+### 1. 文件上传失败
+- 检查文件是否为PDF格式
+- 检查文件大小是否超过限制（10MB）
+- 检查文件数量是否超过限制（100个）
 
-### Q: 合并过程中浏览器崩溃了怎么办？
-A: 这可能是由于处理的文件过多或过大导致的内存溢出。请减少上传的文件数量，或选择更少的每页发票数量。
+### 2. 合并过程缓慢
+- 减少同时处理的文件数量
+- 关闭其他占用浏览器内存的标签页
+- 考虑使用Chrome浏览器，它在PDF处理方面性能较好
 
-### Q: 合并后的PDF文件中的发票显示不全怎么办？
-A: 系统会自动调整发票大小以适应页面布局，但如果发票内容特别密集，可能会影响可读性。建议选择合适的每页发票数量。
+### 3. Docker容器启动失败
+- 检查Docker是否已正确安装并运行
+- 检查端口55561是否被占用
+- 查看容器日志获取详细错误信息：`docker-compose logs`
 
-### Q: Docker容器启动失败怎么办？
-A: 请检查以下问题：
-1. 确保Docker服务正在运行
-2. 检查端口55561是否被占用
-3. 查看容器日志以获取详细错误信息：`docker-compose logs`
-
-### Q: 使用Docker部署时如何更新应用？
-A: 运行以下命令拉取最新镜像并重启容器：
-```bash
-docker-compose pull
-docker-compose up -d
-```
+### 4. 预览功能不工作
+- 检查浏览器是否支持PDF预览
+- 尝试使用Chrome、Firefox等现代浏览器
+- 直接下载PDF文件查看
 
 ## 贡献指南
 
-欢迎对项目提出改进建议或提交代码。如果您有任何问题或建议，请通过Issue或Pull Request与我们联系。
+欢迎提交Issue和Pull Request来帮助改进这个项目！
 
 ## 许可证
 
-本项目采用MIT许可证，您可以自由使用、修改和分发本项目。
-
----
-
-**让我们一起为环保事业贡献力量，从节省每张纸开始！** 🌍
+本项目采用MIT许可证。
